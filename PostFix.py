@@ -1,9 +1,9 @@
 import sys
 
-debug = True
-#debug = False
-def log(s):
-    if debug:
+#debug = True
+debug = False
+def log(s, really = False):
+    if debug | really:
         print(s)
 
 def is_number(s):
@@ -27,31 +27,31 @@ def doCalc(lhs, operand, rhs):
         result = lhs % rhs
     return result
 
-def main(params):
+def main(tokens):
     postFixStack = []
-    #log("Input length : " + str(len(argv)))
-    #log("Input: " + ' '.join(str(v) for v in argv))
-    for v in params:
-        token = str(v)
+    log("Input length : " + str(len(tokens)))
+    log("Input: " + ' '.join(str(v) for v in tokens))
+    for token in tokens:
         log(token)
-        if is_number(v):
+        if is_number(token):
             postFixStack.append(int(token))
             log("Appended " + token)
         elif token in ['*', '/', '+', '-', '%']:
-            #log(token +  " is not number")
+            log(token +  " is not number")
             rhs = int(postFixStack.pop())
             lhs = int(postFixStack.pop())
-            log(str(lhs) + " " + str(v) + " " + str(rhs))
+            log(str(lhs) + " " + token + " " + str(rhs))
             result = doCalc(lhs, token, rhs)
             postFixStack.append(result)
         else:
             raise ValueError("Invalid symbol: {0}".format(token))
-    print("Result: " + str(postFixStack.pop()))
+    log("Result: " + str(postFixStack.pop()), True)
     if len(postFixStack) != 0:
         raise Exception("Unexpected")
 
-#Test
-#main(5, 6, 7, '*', '+', 1, '-')
-#main(5, 6, 7, '*', '+', 1, '-','x')
+
 if __name__ == "__main__":
+    # Test
+    # main(5, 6, 7, '*', '+', 1, '-')
+    # main(5, 6, 7, '*', '+', 1, '-','x')
     main(sys.argv[1:])
