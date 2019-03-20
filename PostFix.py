@@ -39,7 +39,7 @@ def main(*argv):
                 result = lhs % rhs
             postFixStack.append(result)
         else:
-            raise Exception("Invalid symbol " + token)
+            raise ValueError("Invalid symbol: {0}".format(token))
     print("Result: " + str(postFixStack.pop()))
 
 
