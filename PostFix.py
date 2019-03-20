@@ -1,3 +1,5 @@
+import sys
+
 debug = True
 #debug = False
 def log(s):
@@ -25,11 +27,11 @@ def doCalc(lhs, operand, rhs):
         result = lhs % rhs
     return result
 
-def main(*argv):
+def main(params):
     postFixStack = []
-    log("Input length : " + str(len(argv)))
-    log("Input: " + ' '.join(str(v) for v in argv))
-    for v in argv:
+    #log("Input length : " + str(len(argv)))
+    #log("Input: " + ' '.join(str(v) for v in argv))
+    for v in params:
         token = str(v)
         log(token)
         if is_number(v):
@@ -48,5 +50,8 @@ def main(*argv):
     if len(postFixStack) != 0:
         raise Exception("Unexpected")
 
-
-main(5, 6, 7, '*', '+', 1, '-')
+#Test
+#main(5, 6, 7, '*', '+', 1, '-')
+#main(5, 6, 7, '*', '+', 1, '-','x')
+if __name__ == "__main__":
+    main(sys.argv[1:])
