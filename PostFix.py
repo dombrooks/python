@@ -11,9 +11,22 @@ def is_number(s):
     except ValueError:
         return False
 
+def doCalc(lhs, operand, rhs):
+    result = 0
+    if operand == "*":
+        result = lhs * rhs
+    elif operand == "/":
+        result = lhs / rhs
+    elif operand == "+":
+        result = lhs + rhs
+    elif operand == "-":
+        result = lhs - rhs
+    elif operand == "%":
+        result = lhs % rhs
+    return result
+
 def main(*argv):
     postFixStack = []
-    result = 0
     log("Input length : " + str(len(argv)))
     log("Input: " + ' '.join(str(v) for v in argv))
     for v in argv:
@@ -27,20 +40,13 @@ def main(*argv):
             rhs = int(postFixStack.pop())
             lhs = int(postFixStack.pop())
             log(str(lhs) + " " + str(v) + " " + str(rhs))
-            if token == "*":
-                result = lhs * rhs
-            elif token == "/":
-                result = lhs / rhs
-            elif token == "+":
-                result = lhs + rhs
-            elif token == "-":
-                result = lhs - rhs
-            elif token == "%":
-                result = lhs % rhs
+            result = doCalc(lhs, token, rhs)
             postFixStack.append(result)
         else:
             raise ValueError("Invalid symbol: {0}".format(token))
     print("Result: " + str(postFixStack.pop()))
+    if len(postFixStack) != 0:
+        raise Exception("Unexpected")
 
 
 main(5, 6, 7, '*', '+', 1, '-')
