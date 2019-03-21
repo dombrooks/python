@@ -28,6 +28,7 @@ def doCalc(lhs, operand, rhs):
     return result
 
 def main(tokens):
+    symbols = ['*', '/', '+', '-', '%'];
     postFixStack = []
     log("Input length : " + str(len(tokens)))
     log("Input: " + ' '.join(str(v) for v in tokens))
@@ -36,7 +37,7 @@ def main(tokens):
         if is_number(token):
             postFixStack.append(int(token))
             log("Appended " + token)
-        elif token in ['*', '/', '+', '-', '%']:
+        elif token in symbols:
             log(token +  " is not number")
             rhs = int(postFixStack.pop())
             lhs = int(postFixStack.pop())
